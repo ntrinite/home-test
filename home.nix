@@ -2,10 +2,7 @@
 
 {
   # Import other nix modules
-  imports = [
-    ./terminal
-    ./programs
-  ];
+  imports = [ ./terminal ./programs ./de/gnome ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ntrinite";
@@ -16,15 +13,17 @@
   # environment.
 
   # TODO: break out packages into their own nix file and then inherit here
-  home.packages = [
-    pkgs.vim
-    pkgs.git
+  home.packages = with pkgs; [
+    vim
+    git
 
     # TODO: figure out how to put this in code/default.nix
-    pkgs.boost
-    pkgs.grpc
-    pkgs.grpcui
-    pkgs.protobuf
+    boost
+    grpc
+    grpcui
+    protobuf
+    nixfmt
+    nil
 
     # TODO: add python?
     # (pkgs.python3.withPackages (ppkgs: with ppkgs; [
@@ -71,9 +70,7 @@
   #
   #  /etc/profiles/per-user/ntrinite/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "vim";
-  };
+  home.sessionVariables = { EDITOR = "vim"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

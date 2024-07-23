@@ -1,11 +1,10 @@
-{ config, pkgs, lib, ...}:
+{ config, pkgs, lib, ... }:
 
 let
 
-in
-{
+in {
 
-programs.vscode = {
+  programs.vscode = {
     enable = true;
     # REVIST: may not do settings this way since I may want it to be more mutable from vscode
     userSettings = {
@@ -16,10 +15,11 @@ programs.vscode = {
       "files.insertFinalNewLine" = true;
       "editor.bracketPairColorization.enabled" = true;
       "editor.guides.bracketPairs" = true;
-      "terminal.integrated.defaultProfile.linux" = "fish"; # might need to do pkgs.fish
+      "terminal.integrated.defaultProfile.linux" =
+        "fish"; # might need to do pkgs.fish
       "files.associations" = {
         "*.cfg" = "json";
-        "*.py"  = "python";
+        "*.py" = "python";
       };
       "workbench.colorTheme" = "Baby Panda";
 
@@ -33,9 +33,7 @@ programs.vscode = {
         "rgba(255,127,255,0.07)"
         "rgba(96,252,252,0.07)"
       ];
-      "indentRainbow.ignoreErrorLanguages" = [
-        "markdown"
-      ];
+      "indentRainbow.ignoreErrorLanguages" = [ "markdown" ];
 
       # cmake
       "cmake.configureOnEdit" = false;
@@ -43,27 +41,36 @@ programs.vscode = {
       # Set material icons
       "workbench.iconTheme" = "material-icon-theme";
 
+      # Set up nix extension for formatting
+      "nix.enableLanguageServer" = true;
+      "nix.serverPath" = "nil";
+      "nix.serverSettings" = {
+        "nil" = {
+          "formatting" = { "command" = [ "${pkgs.nixfmt}/bin/nixfmt" ]; };
+        };
+      };
     };
-    extensions = with pkgs.vscode-extensions; [
-      ms-python.python
-      ms-python.vscode-pylance
-      mkhl.direnv
-      oderwat.indent-rainbow
-      jnoortheen.nix-ide
-      ms-vscode-remote.remote-ssh
-      mhutchie.git-graph
-      waderyan.gitblame
-      # eamodio.gitlens # Currently crashing vscode?
-      ms-vscode.cpptools
-      tamasfe.even-better-toml
-      ms-vscode.cmake-tools
-      davidanson.vscode-markdownlint
-      mechatroner.rainbow-csv
-      zxh404.vscode-proto3
-      pkief.material-icon-theme
-      gruntfuggly.todo-tree
-      ms-azuretools.vscode-docker
-    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+    extensions = with pkgs.vscode-extensions;
+      [
+        # ms-python.python Frozen at checkPhase when trying to rebuild
+        # ms-python.vscode-pylance
+        mkhl.direnv
+        oderwat.indent-rainbow
+        jnoortheen.nix-ide
+        ms-vscode-remote.remote-ssh
+        mhutchie.git-graph
+        waderyan.gitblame
+        # eamodio.gitlens # Currently crashing vscode?
+        ms-vscode.cpptools
+        tamasfe.even-better-toml
+        ms-vscode.cmake-tools
+        davidanson.vscode-markdownlint
+        mechatroner.rainbow-csv
+        zxh404.vscode-proto3
+        pkief.material-icon-theme
+        gruntfuggly.todo-tree
+        ms-azuretools.vscode-docker
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         { # Baby pand theme
           name = "baby-panda";
           publisher = "gsgualbano";
@@ -76,7 +83,7 @@ programs.vscode = {
           version = "1.11.0";
           sha256 = "sha256-DQ4cSD9ZCRlAWMaWOCjAPYHwS9T/0UAVpmLRwQxU3hE=";
         }
-        { #doxygen
+        { # doxygen
           name = "doxdocgen";
           publisher = "cschlosser";
           version = "1.4.0";
@@ -118,8 +125,6 @@ programs.vscode = {
           version = "1.0.0";
           sha256 = "sha256-tphnVlD5LA6Au+WDrLZkAxnMJeTCd3UTyTN1Jelditk=";
         }
-    ];
+      ];
   };
 }
-
-
