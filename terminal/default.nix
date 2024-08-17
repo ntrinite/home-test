@@ -4,7 +4,8 @@
 
 {pkgs, ... }:
 {
-  imports = [ 
+  imports = [
     ./shells
+    ./terminator.nix
   ];
 }
