@@ -17,14 +17,6 @@
     vim
     git
 
-    # TODO: figure out how to put this in code/default.nix
-    boost
-    grpc
-    grpcui
-    protobuf
-    nixfmt
-    nil
-
     # TODO: add python?
     # (pkgs.python3.withPackages (ppkgs: with ppkgs; [
     #   numpy
