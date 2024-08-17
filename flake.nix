@@ -10,13 +10,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    unstable-nix.url =
+      "github:nixos/nixpkgs/nixpkgs-unstable"; # In case you want some "newer" versions
+
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "unstable-nix";
+    };
+
     # system-manager = {
     #   url = "github:numtide/system-manager";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, unstable-nix, nix-vscode-extensions, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -34,6 +42,13 @@
 
           # Optionally use extraSpecialArgs
           # to pass through arguments to home.nix
+          extraSpecialArgs = {
+            unhinged-nix = import unstable-nix {
+              inherit system;
+              config = { allowUnfree = true; };
+              overlays = [ nix-vscode-extensions.overlays.default ];
+            };
+          };
         };
     };
 }
