@@ -9,10 +9,15 @@ aliases = {
   la = "ls -a";
   ll = "ls -l";
   lla = "ls -la";
-  hmsf = "home-manager switch --flake ~/home -v";
+  hmsf = "home-manager switch --flake ~/.flakes -v";
   hm-gens = "home-manager generations";
-  vimhome = "vim ~/home/home.nix";
-  home = "cd ~/home";
+  vimhome = "vim ~/.flakes/home.nix";
+  home = "cd ~/.flakes";
+};
+
+abbrv = {
+  gc = "git commit -m \"";
+  gp = "git push";
 };
 
 in
@@ -21,6 +26,7 @@ in
 programs.fish = {
     enable = true;
     shellAliases = aliases;
+    shellAbbrs = abbrv;
     plugins = [
       { # Makes fish work better in nix environments
         name = "nix.fish";
