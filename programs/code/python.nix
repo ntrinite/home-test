@@ -1,30 +1,75 @@
-{pkgs, python3, lib, ...}:
+# TODO: change this to an overlay structure and handle the error collisons
+{ pkgs, lib, ... }:
 
 let
-  # dted =
-  # {pkgs, python3}:
-  #   pkgs.python3.buildPythonPackage rec {
-  #     pname = "dted";
-  #     version = "1.0.4";
-  #     src = pkgs.python3Packages.fetchPypi {
-  #       inherit pname version;
-  #       sha256 = lib.fakeSha256;
-  #     };
+  python = pkgs.python311;
+
+  # dted = python.pkgs.buildPythonPackage rec {
+  #   pname = "dted";
+  #   version = "1.1.0";
+  #   src = python_pkgs.fetchPypi {
+  #     inherit pname version;
+  #     sha256 = "sha256-Sa9MY03ku4r6z/us9eJNBCD7UU/6W82Oqv6BqfY1O/k=";
   #   };
-in
-    # (pkgs.python3.withPackages (ppkgs: with ppkgs; [
-    #   numpy
-    #   scipy
-    #   pandas
-    #   paramiko
-    #   pysimplegui
-    #   icmplib
-    #   matplotlib
-    #   haversine
-    #   grpcio
-    #   grpcio-reflection
-    #   protobuf3
-    #   robotframework
-    #   robotframework-sshlibrary
-    #   scp
-    # ]))
+  # };
+
+  # grpcio-reflection = python.pkgs.buildPythonPackage rec {
+  #   pname = "grpcio-reflection";
+  #   version = python_pkgs.grpcio.version;
+  #   src = python_pkgs.fetchPypi {
+  #     inherit pname version;
+  #     sha256 = "sha256-iSXeqHqESALgRjhJgJ1j3Q/KLFj+wPZIilljaDT1WkY=";
+  #   };
+  #   propagatedBuildInputs = [ python python_pkgs.grpcio ];
+  #   doCheck = false;
+
+  # };
+
+  # grpc-requests = python.pkgs.buildPythonPackage rec {
+  #   pname = "grpc_requests";
+  #   version = "0.1.10";
+  #   src = python_pkgs.fetchPypi {
+  #     inherit pname version;
+  #     sha256 =
+  #     "sha256-+eIWpGGRZhxHitcrqnl855wrHciKD7MQTDPgBUAmLbA=";
+  #   };
+  #   patchPhase = "touch requirements.txt ";
+  #   propagatedBuildInputs =
+  #     [ pkgs.python3Packages.grpcio python.pkgs.python3Packages.grpcio-reflection ];
+  #   doCheck = false;
+  # };
+
+in python.withPackages (ppkgs:
+  with ppkgs; [
+    numpy
+    scipy
+    pandas
+    matplotlib
+    pysimplegui
+    pyside6
+    grpcio
+    grpcio-tools
+    grpcio-reflection
+    # grpc-requests
+    pylint # linting
+
+    # ML libraries/utilities
+    # opencv4
+    # tensorflow
+    # pytorch
+    # scikit-learn
+
+    # Needed for robot tests
+    icmplib
+    paramiko
+    robotframework
+    robotframework-sshlibrary
+    scp
+
+    requests # HTTP library
+    setuptools # setup.py
+
+    # Random library for really only one script I've ever used
+    haversine
+    dted #FIX: isn't being recognized?
+  ])

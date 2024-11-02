@@ -17,11 +17,6 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "unstable-nix";
     };
-
-    # system-manager = {
-    #   url = "github:numtide/system-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
 
   outputs = { nixpkgs, home-manager, unstable-nix, nix-vscode-extensions, ... }:

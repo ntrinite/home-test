@@ -3,6 +3,5 @@
 { pkgs, ... }: {
   imports = [
     ./dconf.nix
-    # ./python.nix
   ];
 }
