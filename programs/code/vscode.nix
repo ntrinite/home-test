@@ -1,6 +1,9 @@
 { config, pkgs, lib, unhinged-nix, ... }:
 
 let
+  base-extensions = with unhinged-nix.vscode-extensions; [
+    ms-vscode.cpptools
+  ];
 
 in {
 
@@ -61,7 +64,6 @@ in {
       mhutchie.git-graph
       waderyan.gitblame
       eamodio.gitlens
-      ms-vscode.cpptools
       tamasfe.even-better-toml
       ms-vscode.cmake-tools
       davidanson.vscode-markdownlint
@@ -79,6 +81,6 @@ in {
       fredericbonnet.cmake-test-adapter
       randomfractalsinc.geo-data-viewer
       bbenoist.qml
-    ];
+    ] ++ base-extensions; 
   };
 }
