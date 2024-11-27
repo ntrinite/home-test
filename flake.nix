@@ -10,8 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    unstable-nix.url =
-      "github:nixos/nixpkgs/nixpkgs-unstable"; # In case you want some "newer" versions
+    unstable-nix.url = "github:nixos/nixpkgs/nixpkgs-unstable"; # In case you want some "newer" versions
 
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
@@ -19,31 +18,42 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, unstable-nix, nix-vscode-extensions, ... }:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      unstable-nix,
+      nix-vscode-extensions,
+      ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        config = { allowUnfree = true; };
+        config = {
+          allowUnfree = true;
+        };
       };
-    in {
-      homeConfigurations."ntrinite" =
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+    in
+    {
+      homeConfigurations."ntrinite" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
 
-          # Specify your home configuration modules here, for example,
-          # the path to your home.nix.
-          modules = [ ./home.nix ];
+        # Specify your home configuration modules here, for example,
+        # the path to your home.nix.
+        modules = [ ./home.nix ];
 
-          # Optionally use extraSpecialArgs
-          # to pass through arguments to home.nix
-          extraSpecialArgs = {
-            unhinged-nix = import unstable-nix {
-              inherit system;
-              config = { allowUnfree = true; };
-              overlays = [ nix-vscode-extensions.overlays.default ];
+        # Optionally use extraSpecialArgs
+        # to pass through arguments to home.nix
+        extraSpecialArgs = {
+          unhinged-nix = import unstable-nix {
+            inherit system;
+            config = {
+              allowUnfree = true;
             };
+            overlays = [ nix-vscode-extensions.overlays.default ];
           };
         };
+      };
     };
 }

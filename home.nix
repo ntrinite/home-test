@@ -2,7 +2,11 @@
 
 {
   # Import other nix modules
-  imports = [ ./terminal ./programs ./de/gnome ];
+  imports = [
+    ./terminal
+    ./programs
+    ./de/gnome
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "ntrinite";
@@ -29,13 +33,18 @@
     ];
   };
   # TODO: make this an option from flake to switch between NixOS or just Ubuntu
-  targets.genericLinux = { enable = true; };
+  targets.genericLinux = {
+    enable = true;
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
+  home.file =
+    {
+    };
+  home.sessionVariables = {
+    EDITOR = "vim";
   };
-  home.sessionVariables = { EDITOR = "vim"; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

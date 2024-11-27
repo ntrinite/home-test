@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
 
@@ -7,18 +12,19 @@ let
     name = "After Dark";
     background_color = "#10111b";
     cursor_color = "#aaaaaa";
-    palette =
-      "#2e3436:#ef4a9e:#00d2bc:#e7ca7a:#9399fa:#ca5bcc:#86d079:#d3d7cf:#555753:#ef4a9e:#00d2bc:#e7ca7a:#9399fa:#ca5bcc:#86d079:#eeeeec";
+    palette = "#2e3436:#ef4a9e:#00d2bc:#e7ca7a:#9399fa:#ca5bcc:#86d079:#d3d7cf:#555753:#ef4a9e:#00d2bc:#e7ca7a:#9399fa:#ca5bcc:#86d079:#eeeeec";
     type = "dark";
   };
 
-in {
+in
+{
 
   programs.terminator = {
     enable = true;
     config = {
-      global_config = {
-      };
+      global_config =
+        {
+        };
       profiles.default = {
         font = "Monospace Regular 12";
         use_system_font = false;
@@ -36,4 +42,3 @@ in {
     };
   };
 }
-

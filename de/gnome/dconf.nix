@@ -1,35 +1,43 @@
 # Used to customize some GNOME settings. Based on https://github.com/ElSargo/nix-files/blob/Flake/home/dconf.nix
 # Use gsettings list-recursively | grep keybindings to get all keybinding names
-{ pkgs, lib, ... }: {
-  dconf.settings = with builtins;
+{ pkgs, lib, ... }:
+{
+  dconf.settings =
+    with builtins;
     with lib;
     let
-      binds = [{
-        binding = "<Super>R";
-        command = "${pkgs.rofi}/bin/rofi -show drun";
-        name = "rofi";
-      }];
-      mkreg = imap (i: v:
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom${
-          toString (i - 1)
-        }/");
-      mkbinds = binds:
-        foldl' (a: b: a // b) { } (imap (i: v: {
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom${
-            toString (i - 1)
-          }" = v;
-        }) binds);
-    in (mkbinds binds) // {
+      binds = [
+        {
+          binding = "<Super>R";
+          command = "${pkgs.rofi}/bin/rofi -show drun";
+          name = "rofi";
+        }
+      ];
+      mkreg = imap (
+        i: v: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom${toString (i - 1)}/"
+      );
+      mkbinds =
+        binds:
+        foldl' (a: b: a // b) { } (
+          imap (i: v: {
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom${toString (i - 1)}" = v;
+          }) binds
+        );
+    in
+    (mkbinds binds)
+    // {
 
-      "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings =
-        mkreg binds;
+      "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = mkreg binds;
       "org/gnome/desktop/wm/keybindings" = {
         close = [ "<Alt>F4" ];
         activate-window-menu = [ "<Alt>space" ];
         always-on-top = [ "<Alt><space>T" ];
 
         maximize = [ "<Super>Up" ];
-        unmaximize = [ "<Super>Down" "<Alt>F5" ];
+        unmaximize = [
+          "<Super>Down"
+          "<Alt>F5"
+        ];
 
         move-to-side-e = [ "<Alt><Super>Right" ];
         move-to-side-n = [ "<Alt><Super>Up" ];
@@ -89,7 +97,11 @@
         switch-windows = [ "<Alt>Tab" ];
         switch-windows-backward = [ "<Alt><Shift>Tab" ];
 
-        show-desktop = [ "<Primary><Super>d" "<Primary><Alt>d" "<Super>d" ];
+        show-desktop = [
+          "<Primary><Super>d"
+          "<Primary><Alt>d"
+          "<Super>d"
+        ];
 
         toggle-fullscreen = [ "F11" ];
 
@@ -115,12 +127,22 @@
         raise = [ ];
         raise-or-lower = [ ];
         set-spew-mark = [ ];
-        switch-group = [ "<Super>Above_Tab" "<Alt>Above_Tab" ];
-        switch-group-backward =
-          [ "<Shift><Super>Above_Tab" "<Shift><Alt>Above_Tab" ];
-        switch-input-source = [ "<Super>space" "XF86Keyboard" ];
-        switch-input-source-backward =
-          [ "<Shift><Super>space" "<Shift>XF86Keyboard" ];
+        switch-group = [
+          "<Super>Above_Tab"
+          "<Alt>Above_Tab"
+        ];
+        switch-group-backward = [
+          "<Shift><Super>Above_Tab"
+          "<Shift><Alt>Above_Tab"
+        ];
+        switch-input-source = [
+          "<Super>space"
+          "XF86Keyboard"
+        ];
+        switch-input-source-backward = [
+          "<Shift><Super>space"
+          "<Shift>XF86Keyboard"
+        ];
         switch-panels = [ "<Control><Alt>Tab" ];
         switch-panels-backward = [ "<Shift><Control><Alt>Tab" ];
       };

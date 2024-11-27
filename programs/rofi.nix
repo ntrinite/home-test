@@ -1,9 +1,16 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
 
-in {
+in
+{
 
-  programs.rofi = { enable = true; };
+  programs.rofi = {
+    enable = true;
+  };
 }
-

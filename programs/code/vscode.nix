@@ -1,11 +1,17 @@
-{ config, pkgs, lib, unhinged-nix, ... }:
+{
+  config,
+  lib,
+  unhinged-nix,
+  ...
+}:
 
 let
   base-extensions = with unhinged-nix.vscode-extensions; [
     ms-vscode.cpptools
   ];
 
-in {
+in
+{
 
   programs.vscode = {
     enable = true;
@@ -19,8 +25,7 @@ in {
       "files.insertFinalNewLine" = true;
       "editor.bracketPairColorization.enabled" = true;
       "editor.guides.bracketPairs" = true;
-      "terminal.integrated.defaultProfile.linux" =
-        "fish"; # might need to do pkgs.fish
+      "terminal.integrated.defaultProfile.linux" = "fish"; # might need to do pkgs.fish
       "files.associations" = {
         "*.cfg" = "json";
         "*.py" = "python";
@@ -56,33 +61,36 @@ in {
         };
       };
     };
-    extensions = with unhinged-nix.vscode-marketplace; [
-      ms-python.python
-      ms-python.vscode-pylance
-      mkhl.direnv
-      oderwat.indent-rainbow
-      jnoortheen.nix-ide
-      ms-vscode-remote.remote-ssh
-      mhutchie.git-graph
-      waderyan.gitblame
-      eamodio.gitlens
-      tamasfe.even-better-toml
-      ms-vscode.cmake-tools
-      davidanson.vscode-markdownlint
-      mechatroner.rainbow-csv
-      zxh404.vscode-proto3
-      pkief.material-icon-theme
-      gruntfuggly.todo-tree
-      ms-azuretools.vscode-docker
-      gsgualbano.baby-panda
-      robocorp.robotframework-lsp
-      cschlosser.doxdocgen
-      aaron-bond.better-comments
-      ms-vscode.test-adapter-converter
-      hbenl.vscode-test-explorer
-      fredericbonnet.cmake-test-adapter
-      randomfractalsinc.geo-data-viewer
-      bbenoist.qml
-    ] ++ base-extensions; 
+    extensions =
+      with unhinged-nix.vscode-marketplace;
+      [
+        ms-python.python
+        ms-python.vscode-pylance
+        mkhl.direnv
+        oderwat.indent-rainbow
+        jnoortheen.nix-ide
+        # ms-vscode-remote.remote-ssh # Too new of a version
+        mhutchie.git-graph
+        waderyan.gitblame
+        eamodio.gitlens
+        tamasfe.even-better-toml
+        ms-vscode.cmake-tools
+        davidanson.vscode-markdownlint
+        mechatroner.rainbow-csv
+        zxh404.vscode-proto3
+        pkief.material-icon-theme
+        gruntfuggly.todo-tree
+        ms-azuretools.vscode-docker
+        gsgualbano.baby-panda
+        robocorp.robotframework-lsp
+        cschlosser.doxdocgen
+        aaron-bond.better-comments
+        ms-vscode.test-adapter-converter
+        hbenl.vscode-test-explorer
+        fredericbonnet.cmake-test-adapter
+        randomfractalsinc.geo-data-viewer
+        bbenoist.qml
+      ]
+      ++ base-extensions;
   };
 }

@@ -5,7 +5,6 @@ let
   python = pkgs.python311;
   python_pkgs = pkgs.python311Packages;
 
-
   dted = python_pkgs.buildPythonPackage rec {
     pname = "dted";
     version = "1.1.0";
@@ -20,12 +19,13 @@ let
     version = "0.1.20";
     src = python_pkgs.fetchPypi {
       inherit pname version;
-      sha256 =
-      "sha256-p2dE14HFp786vejcd40kxOF96znRc9hQlv88ruPRUlA=";
+      sha256 = "sha256-p2dE14HFp786vejcd40kxOF96znRc9hQlv88ruPRUlA=";
     };
     patchPhase = "touch requirements.txt ";
-    propagatedBuildInputs =
-      [ python_pkgs.grpcio python_pkgs.grpcio-reflection ];
+    propagatedBuildInputs = [
+      python_pkgs.grpcio
+      python_pkgs.grpcio-reflection
+    ];
     doCheck = false;
   };
 
