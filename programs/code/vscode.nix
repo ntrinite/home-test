@@ -50,7 +50,9 @@ in {
       "nix.serverPath" = "nil";
       "nix.serverSettings" = {
         "nil" = {
-          "formatting" = { "command" = [ "${pkgs.nixfmt}/bin/nixfmt" ]; };
+          "formatting" = {
+            "command" = [ "${unhinged-nix.nixfmt-rfc-style}/bin/nixfmt" ];
+          };
         };
       };
     };

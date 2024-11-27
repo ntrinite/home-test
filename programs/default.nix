@@ -9,7 +9,7 @@
     cmake
     grpcui
     protobuf
-    nixfmt
+    nixfmt-rfc-style
     nil
   ];
 }
